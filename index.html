@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantenimiento de Vehículos</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+        to bottom,
+        #1f2937,
+        #111827,
+        #000000
+    );
+
+    text-align: center;
+    margin: 0;
+    min-height: 100vh;
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+.contenedor-principal{
+    display: flex;
+}
+.menu{
+    width: 25%;
+
+    background: rgba(0,0,0,0.3);
+
+    border-right: 1px solid #00ffff;
+
+    box-shadow:
+        inset 0 0 10px rgba(0,255,255,0.3);
+}
+.marco-neon{
+
+    margin: 3px;
+
+    min-height: calc(100vh - 6px);
+
+    border: 2px solid #00ffff;
+
+    border-radius: 20px;
+
+    box-shadow:
+        inset 0 0 4px #00ffff,
+        inset 0 0 8px #00ffff,
+        0 0 8px rgba(0,255,255,0.3);
+
+}
+
+header{
+  color:white;
+
+    background:
+    linear-gradient(
+    to right,
+    #071224,
+    #102a43,
+    #071224
+    );
+
+    padding: 10px;
+
+    border-bottom:
+    2px solid rgba(0,255,255,0.6);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.8),
+        0 0 10px rgba(0,255,255,0.5);
+
+    position: relative;
+    z-index: 10;
+}
+
+h1{
+  color:white;
+  margin: 0;
+  font-size: 22px;
+}
+
+button{
+    width: 250px;
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1e88e5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1565c0;
+}
+
+.menu-lateral{
+
+position: fixed;
+
+top: 0;
+
+left: -270px;
+
+width: 250px;
+
+height: 100%;
+
+background:
+linear-gradient(
+to bottom,
+#071224,
+#102a43,
+#071224
+);
+
+border-right: 2px solid #00ffff;
+
+box-shadow:
+0 0 15px rgba(0,255,255,0.5);
+
+transition: 0.3s;
+
+padding-top: 80px;
+
+z-index: 1000;
+}
+
+.menu-lateral.abierto{
+left: 0;
+}
+.menu-lateral h2{
+
+background: rgba(0,255,255,0.15);
+
+border: 1px solid #00ffff;
+
+border-radius: 10px;
+
+padding: 10px;
+
+margin: 10px;
+
+color: white;
+
+box-shadow:
+inset 0 0 8px rgba(0,255,255,0.4);
+}
+
+.barra-superior-menu{
+
+display: flex;
+
+align-items: center;
+
+gap: 10px;
+
+padding: 12px;
+
+border-bottom:
+1px solid #00ffff;
+
+background:transparent;
+}
+
+.barra-superior-menu span{
+
+color: white;
+
+font-size: 22px;
+
+font-weight: bold;
+
+text-shadow:
+0 0 8px rgba(0,255,255,0.7);
+}
+
+.menu-lateral button{
+
+width: 90%;
+
+margin: 8px;
+
+font-size: 14px;
+}
+#cerrarMenu{
+background: #1b4f72!important;
+
+width: 60px;
+
+height: 60px;
+
+font-size: 40px;
+
+font-weight: 900;
+
+line-height: 1;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+box-shadow:
+0 0 8px rgba(0,255,255,0.6),
+0 0 15px rgba(0,255,255,0.3);
+}
+#mascota{
+
+position: fixed;
+
+bottom: 20px;
+
+right: 20px;
+
+width: 90px;
+
+height: 90px;
+
+background:
+linear-gradient(
+to bottom,
+#102a43,
+#071224
+);
+
+border: 2px solid #00ffff;
+
+border-radius: 20px;
+
+display: none;
+
+flex-direction: column;
+
+justify-content: center;
+
+align-items: center;
+
+box-shadow:
+0 0 15px rgba(0,255,255,0.5);
+
+z-index: 2000;
+}
+
+#botonKirbot{
+
+position: fixed;
+
+bottom: 20px;
+
+right: 20px;
+
+font-size: 20px;
+
+opacity: 0.15;
+
+z-index: 1999;
+
+cursor: pointer;
+
+transition: 0.3s;
+
+}
+
+#caraMascota{
+font-size: 22px;
+
+margin-bottom: 10px;
+
+color: white;
+}
+
+#nombreMascota{
+
+font-size: 14px;
+
+color: #aeefff;
+}
+#cerrarMenu:hover{
+
+transform: scale(1.05);
+
+transition: 0.2s;
+}
+#cerrarBienvenida{
+
+position: absolute;
+
+top: 10px;
+
+right: 10px;
+
+width: 35px !important;
+
+height: 35px !important;
+
+padding: 0 !important;
+
+margin: 0 !important;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-size: 18px;
+
+line-height: 1;
+
+background: #102a43;
+
+color: white;
+
+border: 1px solid #00ffff;
+
+border-radius: 8px;
+
+cursor: pointer;
+}
+
+#bienvenida{
+
+position: relative;
+
+max-width: 500px;
+
+margin: 70px auto 20px auto;
+
+padding: 25px;
+
+color: white;
+
+background:
+rgba(0,0,0,0.25);
+
+border: 1px solid rgba(0,255,255,0.3);
+
+border-radius: 15px;
+
+box-shadow:
+0 0 10px rgba(0,255,255,0.15);
+
+}
+
+#info{
+
+position: relative;
+
+max-width: 550px;
+
+max-height: 65vh;
+
+overflow-y: auto;
+
+margin: 120px auto 20px auto;
+
+padding: 35px;
+
+color: white;
+
+background:
+rgba(0,0,0,0.25);
+
+border: 1px solid rgba(0,255,255,0.3);
+
+border-radius: 15px;
+
+box-shadow:
+0 0 10px rgba(0,255,255,0.15);
+}
+
+#botonMenu{
+
+position: fixed;
+
+top: 105px;
+
+left: 5px;
+
+width: 55px;
+
+height: 55px;
+
+background: #102a43;
+
+color: white;
+
+border: 1px solid #00ffff;
+
+border-radius: 12px;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-size: 28px;
+
+padding: 0;
+
+cursor: pointer;
+
+z-index: 1100;
+
+box-shadow:
+0 0 10px rgba(0,255,255,0.5);
+}
+</style>
+</head>
+
+<body>
+  <div class="marco-neon">
+
+<header>
+    <h1>Mantenimiento de Frenos</h1>
+    <p>Guía básica de mantenimiento</p>
+</header>
+
+<div class="contenedor">
+
+<div id="menuLateral" class="menu-lateral">
+  <div class="barra-superior-menu">
+
+<button id="cerrarMenu"
+onclick="cerrarMenu()">
+
+❮
+
+</button>
+
+</div>
+
+<button onclick="mostrarInicio()">
+🏠 Inicio
+</button>
+
+<button onclick="mostrarInfo('pastillas')">
+🛑 Pastillas
+</button>
+
+<button onclick="mostrarInfo('liquido')">
+💧 Líquido
+</button>
+
+<button onclick="mostrarInfo('ruidos')">
+⚠️ Ruidos
+</button>
+
+<button onclick="mostrarInfo('discos')">
+🔧 Discos
+</button>
+
+<button onclick="mostrarInfo('emergencia')">
+🚨 Emergencias
+</button>
+<button onclick="mostrarInfo('creditos')">
+🏆 Créditos
+</button>
+
+</div>
+
+<button id="botonMenu" onclick="abrirMenu()">
+☰
+</button>
+
+<div id="bienvenida">
+
+<h2>🚗 Sistema de Frenos</h2>
+
+<p>
+Selecciona una opción del menú para aprender
+sobre mantenimiento y reparación de frenos.
+</p>
+
+</div>
+
+<div id="info" style="display:none;">
+
+</div>
+
+<div id="mascota" onclick="interactuarMascota()">
+
+<div id="caraMascota">
+(•‿•)
+</div>
+
+<div id="nombreMascota">
+KirBot
+</div>
+
+</div>
+
+<div id="botonKirbot"
+onclick="mostrarKirbot()">
+
+👀
+
+</div>
+
+<script>
+function cerrarBienvenida(){
+
+document
+.getElementById("bienvenida")
+.style.display = "none";
+
+document
+.getElementById("mascota")
+.style.display = "flex";
+
+despertarMascota();
+
+}
+function felizMascota(){
+
+document
+.getElementById("caraMascota")
+.innerHTML="(≧◡≦)";
+
+clearTimeout(temporizador);
+
+setTimeout(()=>{
+
+document
+.getElementById("caraMascota")
+.innerHTML="(•‿•)";
+
+},2000);
+
+temporizador=setTimeout(()=>{
+
+document
+.getElementById("caraMascota")
+.innerHTML="(-.-) zZ";
+
+},15000);
+
+}
+  function cerrarMenu(){
+
+document
+.getElementById("menuLateral")
+.classList
+.remove("abierto");
+
+document
+.getElementById("botonMenu")
+.style.display="flex";
+
+document
+.getElementById("caraMascota")
+.innerHTML="(•‿•)";
+
+}
+
+function mostrarInfo(tipo){
+
+let texto = "";
+
+if(tipo==="pastillas"){
+
+texto=`
+<h2>🛑 Cambio de Pastillas de Freno</h2>
+
+<p>
+Las pastillas de freno son uno de los componentes más importantes del sistema de frenado de cualquier vehículo. Su función principal es generar fricción contra el disco de freno para reducir la velocidad o detener completamente el vehículo. Debido a esta función, las pastillas están sometidas a desgaste constante y requieren revisiones periódicas.
+</p>
+
+<p>
+El tiempo de vida útil de unas pastillas puede variar dependiendo del estilo de conducción, el peso del vehículo, las condiciones del camino y la calidad de las piezas instaladas. En condiciones normales suelen durar entre 10,000 y 40,000 kilómetros, aunque este valor puede cambiar considerablemente.
+</p>
+
+<p>
+Uno de los síntomas más comunes de desgaste es un chirrido metálico al frenar. Muchos fabricantes incorporan indicadores de desgaste que producen ruido cuando la pastilla está llegando al final de su vida útil. También puede sentirse una disminución en la capacidad de frenado o vibraciones al presionar el pedal.
+</p>
+
+<p>
+Es recomendable inspeccionar visualmente las pastillas durante cada mantenimiento preventivo. Si el material de fricción tiene menos de unos pocos milímetros de grosor, es momento de considerar su reemplazo. Ignorar este desgaste puede provocar daños en los discos de freno y aumentar significativamente los costos de reparación.
+</p>
+
+<p>
+Al reemplazar las pastillas se recomienda limpiar cuidadosamente la zona de trabajo, revisar los discos y utilizar piezas de buena calidad. Una instalación correcta mejora la seguridad, reduce ruidos y prolonga la vida útil del sistema de frenado.
+</p>
+`;
+}
+
+if(tipo==="liquido"){
+
+texto=`
+<h2>💧 Líquido de Frenos</h2>
+
+<p>
+El líquido de frenos es el encargado de transmitir la fuerza ejercida por el conductor desde el pedal hasta las ruedas. Sin este líquido, el sistema hidráulico no podría funcionar correctamente y el vehículo perdería gran parte de su capacidad de frenado.
+</p>
+
+<p>
+Con el paso del tiempo, el líquido de frenos absorbe humedad del ambiente. Esta humedad reduce su capacidad para soportar altas temperaturas y puede generar burbujas de vapor dentro del sistema. Cuando esto ocurre, el pedal puede sentirse esponjoso o perder efectividad.
+</p>
+
+<p>
+La mayoría de los fabricantes recomiendan reemplazar el líquido cada dos años, aunque este intervalo puede variar según el vehículo y las condiciones de uso. También es importante revisar periódicamente el nivel del depósito y asegurarse de que se mantenga dentro de los límites indicados.
+</p>
+
+<p>
+Nunca debe mezclarse un líquido incompatible con el especificado por el fabricante. Utilizar el tipo incorrecto puede provocar daños en las juntas, sellos y componentes internos del sistema hidráulico.
+</p>
+
+<p>
+Mantener el líquido de frenos en buen estado contribuye directamente a la seguridad del conductor, los pasajeros y las demás personas que comparten la vía pública.
+</p>
+`;
+}
+
+if(tipo==="ruidos"){
+
+texto=`
+<h2>⚠️ Ruidos Extraños al Frenar</h2>
+
+<p>
+Los ruidos provenientes del sistema de frenos son una señal importante que nunca debe ignorarse. Aunque algunos sonidos pueden ser causados por polvo o humedad acumulada, otros pueden indicar problemas mecánicos que requieren atención inmediata.
+</p>
+
+<p>
+Los chirridos suelen estar relacionados con el desgaste de las pastillas. Por otro lado, los sonidos metálicos fuertes pueden indicar que las pastillas ya se han consumido completamente y el soporte metálico está rozando directamente contra el disco.
+</p>
+
+<p>
+Las vibraciones acompañadas de ruido pueden estar relacionadas con discos deformados o superficies irregulares. Estas condiciones afectan la eficiencia del frenado y pueden incrementar las distancias necesarias para detener el vehículo.
+</p>
+
+<p>
+También es posible escuchar golpeteos producidos por piezas flojas, pernos mal ajustados o componentes dañados dentro del sistema de suspensión y frenado. Una inspección profesional permite identificar la causa exacta y evitar averías mayores.
+</p>
+
+<p>
+Ante cualquier ruido inusual, se recomienda realizar una revisión lo antes posible. Detectar los problemas a tiempo puede evitar reparaciones costosas y mejorar la seguridad general del vehículo.
+</p>
+`;
+}
+
+if(tipo==="discos"){
+
+texto=`
+<h2>🔧 Discos de Freno</h2>
+
+<p>
+Los discos de freno trabajan junto con las pastillas para generar la fricción necesaria que permite detener el vehículo. Debido a las altas temperaturas y esfuerzos mecánicos que soportan, también sufren desgaste con el uso diario.
+</p>
+
+<p>
+Un disco en mal estado puede provocar vibraciones en el volante, pérdida de eficiencia al frenar y desgaste irregular de las pastillas. Por esta razón es importante inspeccionarlos durante los mantenimientos periódicos.
+</p>
+
+<p>
+Los discos deben revisarse en busca de grietas, surcos profundos, deformaciones o cambios excesivos en su grosor. Los fabricantes establecen un grosor mínimo seguro que no debe ser superado.
+</p>
+
+<p>
+En algunos casos los discos pueden rectificarse para recuperar una superficie uniforme. Sin embargo, si el desgaste es demasiado grande o existen daños estructurales, la mejor opción será reemplazarlos.
+</p>
+
+<p>
+Instalar discos de buena calidad y mantenerlos limpios ayuda a obtener un frenado más suave, silencioso y seguro. Además, contribuye a prolongar la vida útil de las pastillas y otros componentes relacionados.
+</p>
+`;
+}
+
+if(tipo==="emergencia"){
+
+texto=`
+<h2>🚨 Qué Hacer si Fallan los Frenos</h2>
+
+<p>
+Una falla en el sistema de frenos es una de las situaciones más peligrosas que puede enfrentar un conductor. Mantener la calma es fundamental para reaccionar correctamente y reducir el riesgo de un accidente.
+</p>
+
+<p>
+Si el pedal de freno pierde presión, se recomienda bombearlo repetidamente para intentar recuperar parte de la capacidad de frenado. En algunos casos esto puede restablecer temporalmente la presión hidráulica suficiente para disminuir la velocidad.
+</p>
+
+<p>
+También debe utilizarse el freno motor reduciendo progresivamente las marchas en vehículos con transmisión manual o aprovechando modos de reducción en transmisiones automáticas. Esto ayuda a disminuir la velocidad sin depender exclusivamente de los frenos.
+</p>
+
+<p>
+El freno de estacionamiento puede utilizarse con extrema precaución. Debe accionarse gradualmente para evitar bloquear las ruedas y perder el control del vehículo.
+</p>
+
+<p>
+Si es posible, se debe dirigir el vehículo hacia una zona segura, activar las luces de emergencia y solicitar asistencia mecánica. Después de una falla de frenos nunca debe continuarse la conducción sin una revisión completa del sistema.
+</p>
+
+<p>
+La mejor forma de evitar emergencias es realizar mantenimientos preventivos periódicos, revisar el nivel del líquido de frenos, inspeccionar pastillas y discos, y prestar atención a cualquier síntoma inusual.
+</p>
+`;
+}
+
+if(tipo==="creditos"){
+
+texto=`
+<h2>🏆 Créditos</h2>
+
+<p>
+Página desarrollada por:
+</p>
+
+<p>
+A.
+</p>
+
+<p>
+-Easter egg
+</p>
+
+<p>
+KirBot :>
+</p>
+
+<p>
+-Agradecimiento
+</p>
+
+<p>
+Milanesa
+</p>
+`;
+}
+
+document
+.getElementById("bienvenida")
+.style.display="none";
+
+document
+.getElementById("info")
+.style.display="block";
+
+document.getElementById("info").innerHTML=texto;
+
+}
+function mostrarInicio(){
+
+document
+.getElementById("bienvenida")
+.style.display="block";
+
+document
+.getElementById("info")
+.style.display="none";
+
+}
+let temporizador;
+
+function despertarMascota(){
+
+document
+.getElementById("caraMascota")
+.innerHTML="(⊙_⊙)!";
+
+clearTimeout(temporizador);
+
+setTimeout(()=>{
+
+document
+.getElementById("caraMascota")
+.innerHTML="(•‿•)";
+
+},1500);
+
+temporizador=setTimeout(()=>{
+
+document
+.getElementById("caraMascota")
+.innerHTML="(-.-) zZ";
+
+},15000);
+
+}
+function interactuarMascota(){
+
+let cara =
+document.getElementById("caraMascota").innerHTML;
+
+if(cara.includes("zZ")){
+
+despertarMascota();
+
+}else{
+
+felizMascota();
+
+}
+
+}
+
+function mostrarKirbot(){
+
+document
+.getElementById("mascota")
+.style.display="flex";
+
+despertarMascota();
+
+}
+
+function abrirMenu(){
+
+document
+.getElementById("menuLateral")
+.classList
+.add("abierto");
+
+document
+.getElementById("botonMenu")
+.style.display="none";
+
+document
+.getElementById("caraMascota")
+.innerHTML="(⊙_⊙)!";
+
+setTimeout(()=>{
+
+document
+.getElementById("caraMascota")
+.innerHTML="(•‿•)";
+
+},2000);
+
+}
+
+</script>
+
+</body>
+</html>
